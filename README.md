@@ -1,5 +1,4 @@
 # pei0823.github.io
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,7 +19,7 @@
     }
 
     header {
-      height: 100vh;
+      height: 60vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -105,8 +104,8 @@
 </head>
 <body>
   <header>
-    <h1>Hi, I'm [Your Name]</h1>
-    <p>Welcome to my personal website ✨</p>
+    <h1>Hi, I'm Pei-Sheng!</h1>
+    <p>✨ Welcome to my personal website ✨</p>
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -124,26 +123,26 @@
     <div class="projects-grid">
       <div class="project-card">
         <h3>Project 1</h3>
-        <p>A short description of your first project goes here.</p>
+        <p>still working !!</p>
       </div>
       <div class="project-card">
         <h3>Project 2</h3>
-        <p>A short description of your second project goes here.</p>
+        <p>still working !!</p>
       </div>
       <div class="project-card">
         <h3>Project 3</h3>
-        <p>A short description of your third project goes here.</p>
+        <p>still working !!</p>
       </div>
     </div>
   </section>
 
   <section id="contact" class="contact">
     <h2>Contact</h2>
-    <p>If you’d like to reach me, feel free to email me at <a href="mailto:your-email@example.com" style="color:#ffd369;">your-email@example.com</a>.</p>
+    <p>If you’d like to reach me, feel free to email me at <a href="mailto:easonlin0925250286@gmail.com" style="color:#ffd369;">my email(it's real!)</a>.</p>
   </section>
 
   <footer>
-    <p>© 2025 [Your Name]. All Rights Reserved.</p>
+    <p>© 2025 [Pei-Sheng]. All Rights Reserved.</p>
   </footer>
 </body>
 </html>
