@@ -23,10 +23,10 @@
                 linear-gradient(rgba(0, 234, 238, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 234, 238, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
+            background-attachment: fixed;
             color: #eaeaea;
             line-height: 1.7;
-            overflow-x: hidden;
-            position: relative;
+            overflow-x: hidden; /* 防止水平捲軸出現 */
         }
 
         /* 背景發光暈染 */
@@ -39,13 +39,13 @@
         header {
             min-height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center; 
-            padding: 20px; position: relative; overflow: hidden;
+            padding: 80px 20px 40px; position: relative; overflow: hidden;
         }
 
-        /* --- 動態漂浮程式碼特效 --- */
+        /* --- 動態漂浮程式碼 --- */
         .code-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden; pointer-events: none;
+            z-index: -1; pointer-events: none;
         }
         .floating-code {
             position: absolute; font-family: 'Fira Code', monospace; color: rgba(0, 234, 238, 0.15);
@@ -58,7 +58,6 @@
             90% { opacity: 1; }
             100% { transform: translateY(-110vh) rotate(10deg); opacity: 0; }
         }
-        /* 設定不同程式碼的位置與飄浮速度 */
         .c1 { left: 10%; animation-duration: 18s; animation-delay: 0s; }
         .c2 { left: 30%; animation-duration: 22s; animation-delay: -5s; font-size: 1.8rem; }
         .c3 { left: 60%; animation-duration: 15s; animation-delay: -10s; }
@@ -67,9 +66,9 @@
 
         /* --- 終端機動態頭像框 --- */
         .profile-wrapper {
-            width: 150px; height: 150px; border-radius: 20px; /* 改成方形圓角更有科技感 */
+            width: 130px; height: 130px; border-radius: 20px;
             padding: 3px; background: linear-gradient(135deg, var(--accent-color), transparent);
-            margin-bottom: 25px; box-shadow: 0 0 20px rgba(0, 234, 238, 0.3);
+            margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 234, 238, 0.3);
             animation: float 4s ease-in-out infinite; transform-origin: center;
         }
         .profile-img {
@@ -77,43 +76,45 @@
             display: flex; justify-content: center; align-items: center;
             border: 2px solid #1a2f3a;
         }
-        /* 終端機符號設計 */
-        .terminal-icon { font-family: 'Fira Code', monospace; font-size: 2.5rem; font-weight: 700; color: #fff; }
+        .terminal-icon { font-family: 'Fira Code', monospace; font-size: 2rem; font-weight: 700; color: #fff; }
         .terminal-icon span.arrow { color: var(--accent-color); }
         .terminal-icon span.cursor { 
-            display: inline-block; width: 18px; height: 5px; background: var(--accent-color);
+            display: inline-block; width: 15px; height: 4px; background: var(--accent-color);
             animation: blink 1s step-end infinite; margin-left: 5px; vertical-align: middle;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-10px) scale(1.02); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* 名字大幅放大 */
+        /* 名字排版 */
         header h1 {
-            font-size: clamp(3rem, 10vw, 5.5rem); font-weight: 800;
-            margin-bottom: 10px; letter-spacing: -2px; 
+            font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800;
+            margin-bottom: 5px; letter-spacing: -2px; 
             text-shadow: 0 0 20px rgba(0,234,238,0.4); color: #fff; line-height: 1.1;
         }
 
-        /* 打字機效果 */
+        /* --- 修復後的完美打字機效果 --- */
+        .typewriter-wrapper {
+            display: flex; justify-content: center; width: 100%; margin-bottom: 25px;
+        }
         .typewriter {
             font-family: 'Fira Code', monospace; color: var(--accent-color);
-            font-size: clamp(1rem, 4vw, 1.2rem); margin-bottom: 30px;
+            font-size: clamp(0.9rem, 3.5vw, 1.2rem); 
             overflow: hidden; white-space: nowrap; border-right: .15em solid var(--accent-color);
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-            max-width: fit-content; margin: 0 auto 30px;
+            /* 長度設為剛好 28 個字元 */
+            animation: typing 3s steps(28, end) forwards, blink-caret .75s step-end infinite;
+            width: 0; 
         }
-
-        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes typing { from { width: 0; } to { width: 28ch; } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-color); } }
 
-        /* 頂部行動按鈕 */
-        .header-actions { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 10; }
+        /* 頂部按鈕 */
+        .header-actions { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; z-index: 10; margin-bottom: 20px;}
         .btn {
-            padding: 12px 25px; border-radius: 8px; text-decoration: none; font-family: 'Fira Code', monospace;
+            padding: 10px 20px; border-radius: 8px; text-decoration: none; font-family: 'Fira Code', monospace;
             font-weight: 600; font-size: 0.9rem; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px;
         }
         .btn-primary { background: var(--accent-color); color: #000; box-shadow: 0 0 15px rgba(0,234,238,0.2); }
@@ -121,36 +122,39 @@
         .btn-outline { border: 1px solid var(--accent-color); color: var(--accent-color); background: rgba(0,234,238,0.05); }
         .btn-outline:hover { background: rgba(0,234,238,0.15); transform: translateY(-3px); }
 
+        /* --- 修復後的導覽列定位 --- */
         nav {
             backdrop-filter: blur(12px); background: rgba(11, 19, 26, 0.8);
-            padding: 15px 30px; border-radius: 12px; border: 1px solid var(--glass-border);
-            position: sticky; top: 20px; z-index: 100; margin: -50px auto 40px; width: fit-content;
+            padding: 12px 25px; border-radius: 12px; border: 1px solid var(--glass-border);
+            position: sticky; top: 20px; z-index: 100; margin: 0 auto 40px; width: fit-content;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         nav a {
-            color: #fff; text-decoration: none; margin: 0 15px;
-            font-weight: 600; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s;
+            color: #fff; text-decoration: none; margin: 0 12px;
+            font-weight: 600; font-size: 0.85rem; text-transform: uppercase; transition: 0.3s;
         }
         nav a:hover { color: var(--accent-color); text-shadow: 0 0 8px var(--accent-color); }
 
-        section { padding: 80px 20px; max-width: 900px; margin: auto; position: relative; z-index: 10; }
+        /* 內容區塊 */
+        section { padding: 60px 20px; max-width: 900px; margin: auto; position: relative; z-index: 10; }
         .card {
             background: var(--glass-bg); backdrop-filter: blur(15px);
-            padding: 40px; border-radius: 16px; border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); margin-bottom: 40px;
+            padding: 35px; border-radius: 16px; border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); margin-bottom: 30px;
         }
-        h2 { font-size: 2rem; margin-bottom: 25px; color: var(--accent-color); border-bottom: 1px dashed var(--glass-border); padding-bottom: 10px; font-family: 'Fira Code', monospace;}
+        h2 { font-size: 1.8rem; margin-bottom: 25px; color: var(--accent-color); border-bottom: 1px dashed var(--glass-border); padding-bottom: 10px; font-family: 'Fira Code', monospace;}
         
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
         .tag-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
         .tag {
             background: rgba(0, 234, 238, 0.05); border: 1px solid rgba(0, 234, 238, 0.3);
-            color: var(--accent-color); padding: 5px 15px; border-radius: 8px; font-size: 0.85rem; font-family: 'Fira Code', monospace;
+            color: var(--accent-color); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-family: 'Fira Code', monospace;
         }
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
         .project-card {
             background: rgba(255, 255, 255, 0.02); padding: 25px; border-radius: 12px;
             border: 1px solid var(--glass-border); transition: all 0.3s ease;
-            border-left: 3px solid transparent;
+            border-left: 3px solid transparent; display: flex; flex-direction: column; justify-content: space-between;
         }
         .project-card:hover { 
             transform: translateX(5px); border-left: 3px solid var(--accent-color); 
@@ -161,8 +165,14 @@
             text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1rem; font-family: 'Fira Code', monospace;
         }
         .contact-link:hover { text-shadow: 0 0 15px var(--accent-color); }
-        footer { text-align: center; padding: 40px 20px; opacity: 0.5; font-size: 0.8rem; font-family: 'Fira Code', monospace; }
-        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } .typewriter { font-size: 0.9rem; } }
+        footer { text-align: center; padding: 30px 20px 60px; opacity: 0.5; font-size: 0.8rem; font-family: 'Fira Code', monospace; }
+        
+        /* 手機版排版優化 */
+        @media (max-width: 600px) { 
+            .grid-2 { grid-template-columns: 1fr; } 
+            nav { padding: 12px 15px; }
+            nav a { margin: 0 8px; font-size: 0.75rem; }
+        }
     </style>
 </head>
 <body>
@@ -184,15 +194,16 @@
 
         <h1>林沛陞 <br><span style="color: var(--accent-color); font-size: 0.8em;">PEI-SHENG</span></h1>
         
-        <div class="typewriter">
-            > const string role = "CS Student @ YZU";
+        <div class="typewriter-wrapper">
+            <div class="typewriter">
+                > const string major = "CS";
+            </div>
         </div>
 
         <div class="header-actions">
             <a href="#projects" class="btn btn-primary">cd ./projects</a>
             <a href="https://github.com/你的GitHub帳號" target="_blank" class="btn btn-outline">git clone GitHub</a>
         </div>
-
     </header>
 
     <nav>
@@ -215,7 +226,7 @@
         </div>
     </section>
 
-    <section id="skills" style="padding-top: 20px;">
+    <section id="skills">
         <div class="card">
             <h2>> ls ./skills</h2>
             <p>目前點亮的技能樹跟日常狀態：</p>
@@ -231,8 +242,8 @@
         </div>
     </section>
 
-    <section id="projects" style="padding-top: 20px;">
-        <div class="card" style="background: transparent; border: none; box-shadow: none; padding: 0;">
+    <section id="projects">
+        <div style="margin-bottom: 30px;">
             <h2 style="border: none;">> cat ./projects.log</h2>
             <div class="projects-grid">
                 <div class="project-card">
@@ -251,7 +262,7 @@
         </div>
     </section>
 
-    <section id="contact" style="padding-top: 20px;">
+    <section id="contact">
         <div class="card" style="text-align: center;">
             <h2>> ping -c 4 contact</h2>
             <p>如果有程式問題想討論，或是剛好缺人打團戰，歡迎寄信給我！</p>
