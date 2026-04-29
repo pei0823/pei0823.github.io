@@ -8,8 +8,7 @@
     <style>
         :root {
             --bg-color: #0b131a;
-            --accent-color: #00eaee; /* 顏色維持電光藍 grid 和 profile */
-            --accent-color-rgb: 0, 234, 238;
+            --accent-color: #00eaee;
             --glass-bg: rgba(11, 19, 26, 0.7);
             --glass-border: rgba(0, 234, 238, 0.2);
         }
@@ -17,7 +16,7 @@
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
             font-family: 'Inter', system-ui, sans-serif;
-            cursor: none !important; /* 徹底隱藏預設滑鼠 */
+            cursor: none !important; 
         }
         
         html { scroll-behavior: smooth; }
@@ -34,52 +33,56 @@
             overflow-x: hidden; 
         }
 
-        /* --- ✨ 新滑鼠核心：修復 stuck Bug 和可愛倉鼠 --- */
+        /* --- ✨ 倉鼠鼠標 (加大版) --- */
         #custom-cursor {
-            /* 初始化預設：靜態倉鼠圖片 (30x30px) */
-            width: 30px; height: 30px; 
+            width: 50px; height: 50px; 
             position: fixed; 
             pointer-events: none;
-            z-index: 9999; 
-            
-            /* ✨ 修正 1：去掉反色效果，顯示真實可愛顏色 */
+            z-index: 10001; 
             mix-blend-mode: normal !important; 
-            
-            /* 將圖片居中在游標點 */
             transform: translate(-50%, -50%);
-
-            /* ✨ 新滑鼠圖片 1 (預設靜態)：薰衣草紫倉鼠 Smiles */
-            background-image: url('https://cdn.custom-cursor.com/packs/5489/cute-hamster-pack.png');
+            /* 預設：可愛倉鼠 */
+            background-image: url('https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hamster.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-
-            /* 初始化為可見，平滑過渡透明度 */
             opacity: 1; 
-            transition: opacity 0.2s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.2s, transform 0.2s ease-out;
         }
 
-        /* ✨ 新滑鼠圖片 2 (到定位動態打哈欠)：在懸停時變成打哈欠 GIF */
+        /* 懸停狀態：打哈欠倉鼠 GIF (更大) */
         .cursor-hover { 
-            width: 50px !important; /* 放大容器 space 給打哈欠哈鼠 */
-            height: 50px !important;
-            transform: translate(-50%, -50%) scale(1.1); /* 放大 */
-            
-            /* 可愛卡通打哈欠倉鼠 GIF substitute URL */
-            background-image: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGlna25rMHJpdWRiMzFicG84N3BicG84N3BicG84N3BicG84N3BicG84JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/61SNA0O_U2mXm/giphy.gif') !important;
+            width: 90px !important; 
+            height: 90px !important;
+            background-image: url('https://i.giphy.com/61SNA0O_U2mXm.gif') !important;
         }
 
-        /* --- 2. 螢幕質感效果 --- */
+        /* --- 🏃 跑動倉鼠進度條 --- */
+        #progress-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+            z-index: 10000; background: rgba(255,255,255,0.05);
+        }
+        #scroll-progress {
+            height: 100%; width: 0%;
+            background: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-color);
+            position: relative;
+        }
+        #running-hamster {
+            position: absolute;
+            right: -20px; top: -35px; /* 讓它跑在條條上面 */
+            width: 45px; height: 45px;
+            background-image: url('https://i.giphy.com/3o7TKMGpxx6xYdE208.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+        }
+
+        /* 背景與質感 */
         body::after {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
             background-size: 100% 4px; z-index: 9998; pointer-events: none; opacity: 0.15;
-        }
-
-        #scroll-progress {
-            position: fixed; top: 0; left: 0; width: 0%; height: 3px;
-            background: var(--accent-color); z-index: 10000;
-            box-shadow: 0 0 10px var(--accent-color);
         }
 
         header {
@@ -143,7 +146,7 @@
         }
         .btn-primary { background: var(--accent-color); color: #000; }
         .btn-outline { border: 1px solid var(--accent-color); color: var(--accent-color); }
-        .btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 20px rgba(0, 234, 238, 0.4); }
+        .btn:hover { transform: translateY(-3px) scale(1.05); }
 
         nav {
             backdrop-filter: blur(12px); background: rgba(11, 19, 26, 0.8);
@@ -175,7 +178,7 @@
         }
         .project-card:hover { 
             transform: translateY(-10px) scale(1.03); border-left: 3px solid var(--accent-color); 
-            background: rgba(0, 234, 238, 0.08); box-shadow: 0 10px 30px rgba(0, 234, 238, 0.2);
+            background: rgba(0, 234, 238, 0.08);
         }
 
         footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8rem; font-family: 'Fira Code', monospace; }
@@ -186,7 +189,12 @@
 <body>
 
     <div id="custom-cursor"></div>
-    <div id="scroll-progress"></div>
+    
+    <div id="progress-container">
+        <div id="scroll-progress">
+            <div id="running-hamster"></div>
+        </div>
+    </div>
 
     <header>
         <div class="code-container">
@@ -275,39 +283,30 @@
         const cursor = document.getElementById('custom-cursor');
         const scrollBar = document.getElementById('scroll-progress');
 
-        // 1. 滑鼠移動跟隨 (保持 30x30px size 並居中對準游標點)
+        // 1. 滑鼠移動跟隨
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // ✨ 修正 2：徹底修復「卡邊 Bug」
-        // 當滑鼠離開瀏覽器視窗時，自動隱藏自定義鼠標
-        document.body.addEventListener('mouseleave', () => {
-            cursor.style.opacity = 0; 
-        });
-        // 當滑鼠重新移入瀏覽器視窗時，顯示自定義鼠標
-        document.body.addEventListener('mouseenter', () => {
-            cursor.style.opacity = 1; 
-        });
+        // 2. 修復卡邊：離開視窗隱藏
+        document.addEventListener('mouseleave', () => cursor.style.opacity = 0);
+        document.addEventListener('mouseenter', () => cursor.style.opacity = 1);
 
-        // 3. 懸停互動：切換成「動態打哈欠倉鼠 GIF」
+        // 3. 懸停互動
         const interactives = document.querySelectorAll('a, .btn, .project-card, .tag');
         interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('cursor-hover');
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('cursor-hover');
-            });
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        // 4. 滾動進度條
+        // 4. 滾動進度條與倉鼠奔跑
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             if (height > 0) {
-                scrollBar.style.width = (winScroll / height) * 100 + "%";
+                const scrolled = (winScroll / height) * 100;
+                scrollBar.style.width = scrolled + "%";
             }
         });
     </script>
