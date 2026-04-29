@@ -8,10 +8,10 @@
     <style>
         :root {
             --bg-color: #0b131a;
-            --accent-color: #c6a6f6; /* 可愛薰衣草紫 */
-            --accent-color-rgb: 198, 166, 246;
+            --accent-color: #00eaee; /* 顏色改回電光藍 */
+            --accent-color-rgb: 0, 234, 238;
             --glass-bg: rgba(11, 19, 26, 0.7);
-            --glass-border: rgba(198, 166, 246, 0.2);
+            --glass-border: rgba(0, 234, 238, 0.2);
         }
 
         * { 
@@ -25,8 +25,8 @@
         body {
             background-color: var(--bg-color);
             background-image: 
-                linear-gradient(rgba(198, 166, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(198, 166, 246, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(0, 234, 238, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 234, 238, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
             background-attachment: fixed;
             color: #eaeaea;
@@ -36,30 +36,34 @@
 
         /* --- 1. 自定義動態游標 --- */
         #custom-cursor {
-            width: 10px; height: 10px; background: var(--accent-color);
-            border-radius: 50%; position: fixed; pointer-events: none;
-            z-index: 9999; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 10px; height: 10px; 
+            background: var(--accent-color);
+            border-radius: 50%; 
+            position: fixed; 
+            pointer-events: none;
+            z-index: 9999; 
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
             mix-blend-mode: difference;
         }
 
-        /* 互動時的動態愛心 */
+        /* 互動時的倉鼠圖標：修正「兩個圖案」的問題 */
         .cursor-hover { 
-            transform: scale(4); 
-            background: transparent !important;
-            mix-blend-mode: normal !important;
-        }
-        .cursor-hover::after {
-            content: ""; position: absolute; top: -10px; left: -10px;
-            width: 30px; height: 30px;
-            background-image: url('https://sweezy-cursors.com/wp-content/uploads/cursor/red-pink-pixel-heart-animated/red-pink-pixel-heart-animated-custom-cursor.gif');
-            background-size: contain; background-repeat: no-repeat;
+            width: 60px !important; /* 放大容器空間給倉鼠 */
+            height: 60px !important;
+            background: transparent !important; /* 徹底隱藏原本的藍點 */
+            mix-blend-mode: normal !important; /* 正常顯示圖片顏色 */
+            transform: translate(-50%, -50%) scale(1.2); /* 居中放大 */
+            background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXkwaGx6Mnd6N3p6NXp6NXp6NXp6NXp6NXp6NXp6NXp6NXp6NXp6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxx6xYdE208/giphy.gif') !important;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
         }
 
         /* --- 2. 螢幕質感效果 --- */
         body::after {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-            background-size: 100% 4px; z-index: 9998; pointer-events: none; opacity: 0.2;
+            background-size: 100% 4px; z-index: 9998; pointer-events: none; opacity: 0.15;
         }
 
         #scroll-progress {
@@ -76,7 +80,7 @@
 
         .code-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
         .floating-code {
-            position: absolute; font-family: 'Fira Code', monospace; color: rgba(198, 166, 246, 0.15);
+            position: absolute; font-family: 'Fira Code', monospace; color: rgba(0, 234, 238, 0.15);
             font-size: 1.2rem; white-space: nowrap; animation: drift linear infinite; bottom: -10%;
         }
         @keyframes drift {
@@ -92,7 +96,7 @@
         .profile-wrapper {
             width: 130px; height: 130px; border-radius: 20px; padding: 3px;
             background: linear-gradient(135deg, var(--accent-color), transparent);
-            margin-bottom: 20px; box-shadow: 0 0 20px rgba(198, 166, 246, 0.3);
+            margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 234, 238, 0.3);
             animation: float 4s ease-in-out infinite;
         }
         .profile-img {
@@ -111,7 +115,7 @@
 
         header h1 {
             font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800;
-            text-shadow: 0 0 20px rgba(198, 166, 246, 0.4); color: #fff; line-height: 1.1;
+            text-shadow: 0 0 20px rgba(0, 234, 238, 0.4); color: #fff; line-height: 1.1;
         }
 
         .typewriter {
@@ -129,7 +133,7 @@
         }
         .btn-primary { background: var(--accent-color); color: #000; }
         .btn-outline { border: 1px solid var(--accent-color); color: var(--accent-color); }
-        .btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 20px rgba(198, 166, 246, 0.4); }
+        .btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 20px rgba(0, 234, 238, 0.4); }
 
         nav {
             backdrop-filter: blur(12px); background: rgba(11, 19, 26, 0.8);
@@ -148,7 +152,7 @@
         h2 { font-size: 1.8rem; margin-bottom: 25px; color: var(--accent-color); border-bottom: 1px dashed var(--glass-border); font-family: 'Fira Code', monospace;}
         
         .tag {
-            background: rgba(198, 166, 246, 0.05); border: 1px solid rgba(198, 166, 246, 0.3);
+            background: rgba(0, 234, 238, 0.05); border: 1px solid rgba(0, 234, 238, 0.3);
             color: var(--accent-color); padding: 6px 14px; border-radius: 6px; display: inline-block; margin: 5px;
             font-size: 0.85rem; font-family: 'Fira Code', monospace;
         }
@@ -161,7 +165,7 @@
         }
         .project-card:hover { 
             transform: translateY(-10px) scale(1.03); border-left: 3px solid var(--accent-color); 
-            background: rgba(198, 166, 246, 0.08); box-shadow: 0 10px 30px rgba(198, 166, 246, 0.2);
+            background: rgba(0, 234, 238, 0.08); box-shadow: 0 10px 30px rgba(0, 234, 238, 0.2);
         }
 
         footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8rem; font-family: 'Fira Code', monospace; }
@@ -205,7 +209,7 @@
     <section id="about">
         <div class="card">
             <h2>> About</h2>
-            <p>嗨，我是林沛陞！目前就讀於元智大學資工系。寫程式的標配是 Spotify 3天8小時長的歌單配上熱牛奶，是一個為了鍵盤聲可以重寫整個 function 的人。</p>
+            <p>嗨，我是林沛陞！目前就讀於元智大學資工系。最喜歡深夜打 code 的聲音，這是我跟世界的溝通方式。</p>
             <div style="margin-top: 20px; display: flex; gap: 10px;">
                 <div class="tag">🎓 s1133341</div>
                 <div class="tag">📚 Computer Science</div>
@@ -217,7 +221,7 @@
         <div class="card">
             <h2>> Skills</h2>
             <div class="tag">C++</div><div class="tag">Data Structure</div><div class="tag">Algorithm</div>
-            <div class="tag">Spotify 資深用戶</div><div class="tag">占星 塔羅 手相</div><div class="tag">皮克敏養殖戶</div>
+            <div class="tag">Spotify 資深用戶</div><div class="tag">占星 塔羅 手相</div><div class="tag">倉鼠飼育專家</div>
         </div>
     </section>
 
@@ -227,19 +231,19 @@
             <a href="https://github.com/pei0823/11402_CI002" target="_blank" style="text-decoration: none; color: inherit;">
                 <div class="project-card">
                     <h3 style="color: var(--accent-color);">C++ 實習紀錄</h3>
-                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">11402學期的課堂筆記與作業，學期分數就靠它了!</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">11402 學期的血淚筆記，學期分數的最後希望。</p>
                 </div>
             </a>
             <a href="#" target="_blank" style="text-decoration: none; color: inherit;">
                 <div class="project-card">
                     <h3 style="color: var(--accent-color);">線性代數復健區</h3>
-                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">雖然已經學完了，但整理筆記真的是二次傷害。</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">雖然學完了，但看到矩陣還是會 PTSD。</p>
                 </div>
             </a>
             <a href="https://www.instagram.com/ssstupid_1723/" target="_blank" style="text-decoration: none; color: inherit;">
                 <div class="project-card">
                     <h3 style="color: var(--accent-color);">個人耍廢指南</h3>
-                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">包含日常紀錄和回憶留存區，跟程式沒半毛錢關係。</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">記錄生活廢文，跟程式碼絕對沒關係。</p>
                 </div>
             </a>
         </div>
@@ -261,17 +265,24 @@
         const cursor = document.getElementById('custom-cursor');
         const scrollBar = document.getElementById('scroll-progress');
 
+        // 滑鼠移動跟隨 (增加一點偏移補償，讓圖標中心對準游標)
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
+        // 懸停互動
         const interactives = document.querySelectorAll('a, .btn, .project-card, .tag');
         interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-hover');
+            });
         });
 
+        // 滾動進度條
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
