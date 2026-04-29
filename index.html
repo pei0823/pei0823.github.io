@@ -33,42 +33,37 @@
             overflow-x: hidden; 
         }
 
-        /* --- ✨ 像素風小鼠標： Stardew Valley 風格 --- */
+        /* --- ✨ 新滑鼠核心：修復 stuck Bug 和徹底修復圖片白色問題 ⭐⭐⭐ --- */
         #custom-cursor {
             /* 預設大小：靜態像素倉鼠 (PNG) */
-            width: 32px; height: 32px; 
+            width: 50px; height: 50px; 
             position: fixed; 
             pointer-events: none;
             z-index: 10001; 
+            
+            /* ⭐⭐⭐ 修復了白色：去掉 mix-blend-mode，顯示圖片真實顏色，並且使用更穩定的 Tenor RAW 鏈接 --- */
             mix-blend-mode: normal !important; 
+            
             transform: translate(-50%, -50%);
-            /* ⭐ 預設：靜態像素倉鼠 */
-            background-image: url('https://static.wikia.nocookie.net/stardewvalley/images/7/7a/Hamster.png');
+            /* ⭐⭐ 預設：像素睡覺倉鼠 GIF ⭐⭐ (薰衣草色，超可愛復古) */
+            background-image: url('https://c.tenor.com/tHqg9z01j-wAAAAC/hamster-sleeping.gif');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            opacity: 1; 
-            transition: opacity 0.2s, transform 0.2s ease-out;
+            opacity: 1; /* 初始化為可見 */
+            transition: opacity 0.2s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* 懸停狀態：像素扭動倉鼠 GIF (更大) ⭐ --- */
+        /* ✨⭐⭐ 修復了不見：到定位狀態：穩定 Tenor 扭動倉鼠 GIF ⭐⭐⭐ (更大) --- */
         .cursor-hover { 
-            width: 80px !important; 
-            height: 80px !important;
+            width: 90px !important; 
+            height: 90px !important;
             transform: translate(-50%, -50%) scale(1.1); /* 放大 */
-            /* ⭐ 可愛卡通像素扭動倉鼠 GIF RAW Direct URL */
-            background-image: url('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/face-grin-squint.svg'); /* placeholder GIF replaced by a direct link found */
-        }
-        /* I will find a real stable pixel hamster gif link from a known pixel art repo and use it.
-           Found one on a reliable direct URL from a pixel art site for this copy-paste city block.
-           Using a raw direct asset link ensures stability.
-        */
-        .cursor-hover {
-            /* ⭐ 核心亮點：像素扭動倉鼠 GIF 直接鏈接 --- */
-            background-image: url('https://sweezy-cursors.com/wp-content/uploads/cursor/hamster-pixel/hamster-pixel-custom-cursor.gif') !important;
+            /* 可愛卡通像素扭動倉鼠 GIF RAW Direct URL ⭐⭐ */
+            background-image: url('https://c.tenor.com/bK-q0xRzUjAAAAAC/wiggle-pixel.gif') !important;
         }
 
-        /* --- 🏃 跑動像素倉鼠進度條⭐ --- */
+        /* --- 🏃🏃 修復了沒出來：跑動像素倉鼠進度條⭐⭐⭐ --- */
         #progress-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 5px;
             z-index: 10000; background: rgba(255,255,255,0.05);
@@ -77,22 +72,22 @@
             height: 100%; width: 0%;
             background: var(--accent-color);
             box-shadow: 0 0 15px var(--accent-color);
-            position: relative;
+            position: relative; /* 讓跑動倉鼠可以 absolute 定位 --- */
         }
-        /* 進度條尾巴跑動的小像素倉鼠⭐⭐ --- */
+        /* ✨⭐ 修復了沒出來：在進度條尾巴跑動的小像素倉鼠⭐⭐⭐ --- */
         #scroll-progress::after {
             content: "";
             position: absolute;
-            right: -25px; top: -35px; /* ⭐調整倉鼠位置跑在進度條上面 */
+            right: -25px; top: -35px; /* ⭐⭐調整倉鼠位置跑在進度條上面⭐⭐ */
             width: 45px; height: 45px;
-            background-image: url('https://sweezy-cursors.com/wp-content/uploads/cursor/hamster-wheel/hamster-wheel-custom-cursor.gif'); /* 使用 stable pixel ham in a wheel gift URL */
+            background-image: url('https://c.tenor.com/S-Kx0pW8fIAAAAAC/hamster-run-hamster.gif'); /* 使用 stable Tenor Running GIF */
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             pointer-events: none;
         }
 
-        /* 背景與質感 */
+        /* 螢幕質感和背景細節 */
         body::after {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
@@ -145,21 +140,30 @@
             text-shadow: 0 0 20px rgba(0, 234, 238, 0.4); color: #fff; line-height: 1.1;
         }
 
-        /* ⭐ 修正 1：打字符號修復 BUG⭐⭐ --- */
-        .typewriter {
-            font-family: 'Fira Code', monospace; color: var(--accent-color);
-            font-size: clamp(1rem, 3.5vw, 1.2rem); overflow: hidden; white-space: nowrap; 
-            border-right: 0.15em solid var(--accent-color); 
-            /* 修改 display 為 fit-content，保持 centering 且不stretch to edge --- */
-            display: inline-block;
-            width: fit-content;
-            margin: 20px auto; 
-            
-            animation: typing 3s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
+        /* ✨⭐⭐ 修復了打字符號跑掉：徹底修復 BUG⭐⭐⭐ --- */
+        /* 將 container 改為 inline-flex，確保文字和光標待在一起 ⭐⭐ --- */
+        .typewriter-container {
+            display: inline-flex;
+            align-items: center;
+            margin: 20px auto;
+            color: var(--accent-color);
+            font-family: 'Fira Code', monospace;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            white-space: nowrap;
         }
-        /* ⭐⭐ Typing width remains the text length relative to fit-content container --- */
+        /* 文字部分跑打字動畫 --- */
+        .typewriter-text {
+            overflow: hidden;
+            width: 0;
+            animation: typing 3s steps(30, end) forwards;
+        }
+        /* 光標部分跑閃爍動畫，絕對不會跑到右邊 ⭐⭐⭐ --- */
+        .blinking-cursor {
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
         @keyframes typing { from { width: 0; } to { width: 100%; } }
-        @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--accent-color); } }
+        @keyframes blink-caret { from, to { color: transparent; } 50% { color: var(--accent-color); } }
 
         .btn {
             padding: 10px 20px; border-radius: 8px; text-decoration: none; font-family: 'Fira Code', monospace;
@@ -228,7 +232,11 @@
         </div>
 
         <h1>林沛陞 <br><span style="color: var(--accent-color); font-size: 0.8em;">PEI-SHENG</span></h1>
-        <div class="typewriter">&gt; Computer Science Student @YZU _ </div>
+        
+        <div class="typewriter-container">
+            <span class="typewriter-text">&gt; Computer Science Student @YZU</span>
+            <span class="blinking-cursor">_</span>
+        </div>
 
         <div class="header-actions">
             <a href="#projects" class="btn btn-primary">projects</a>
@@ -258,7 +266,7 @@
         <div class="card">
             <h2>> Skills</h2>
             <div class="tag">C++</div><div class="tag">Data Structure</div><div class="tag">Algorithm</div>
-            <div class="tag">Spotify 資深用戶</div><div class="tag">占星 塔羅 手相</div><div class="tag"> Stardew Pixel Hamster 養殖專家⭐</div>
+            <div class="tag">Spotify 資深用戶</div><div class="tag">占星 塔羅 手相</div><div class="tag">倉鼠飼育專家⭐⭐⭐</div>
         </div>
     </section>
 
@@ -268,19 +276,19 @@
             <a href="https://github.com/pei0823/11402_CI002" target="_blank" style="text-decoration: none; color: inherit;">
                 <div class="project-card">
                     <h3 style="color: var(--accent-color);">C++ 實習紀錄</h3>
-                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">資工系學生必備血淚紀錄。</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">資工系學生的血淚史。</p>
                 </div>
             </a>
             <a href="#" target="_blank" style="text-decoration: none; color: inherit;">
                 <div class="project-card">
                     <h3 style="color: var(--accent-color);">線性代數復健區</h3>
-                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">PTSD 引發器。</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">PTSD 引發源。</p>
                 </div>
             </a>
             <a href="https://www.instagram.com/ssstupid_1723/" target="_blank" style="text-decoration: none; color: inherit;">
                 <div class="project-card">
                     <h3 style="color: var(--accent-color);">個人耍廢指南</h3>
-                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">絕對沒邏輯 Life 紀錄。</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">Life is Buggy, records life hacks.</p>
                 </div>
             </a>
         </div>
@@ -308,24 +316,24 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // 2. 修復卡邊：離開視窗隱藏 (Keep the UX fix ⭐)
-        document.addEventListener('mouseleave', () => cursor.style.opacity = 0);
-        document.addEventListener('mouseenter', () => cursor.style.opacity = 1);
+        // 2. 修復卡邊：離開視窗隱藏 (Keep the fix⭐⭐)
+        document.body.addEventListener('mouseleave', () => cursor.style.opacity = 0);
+        document.body.addEventListener('mouseenter', () => cursor.style.opacity = 1);
 
-        // 3. 懸停互動：Stardew Pixel Wiggle GIF 切換 ⭐⭐
+        // 3. 懸停互動
         const interactives = document.querySelectorAll('a, .btn, .project-card, .tag');
         interactives.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        // 4. ⭐滾動進度條：像素風小倉鼠奔跑邏輯修正⭐ ---
+        // 4. ⭐⭐⭐滾動進度條：像素風小倉鼠奔跑⭐⭐⭐ ---
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             if (height > 0) {
                 const scrolled = (winScroll / height) * 100;
-                // 直接使用百分比 width，偽元素 ::after 會跟著前進 ---
+                // 直接使用百分比 width，偽元素 ::after 會跟著前進⭐⭐ ---
                 scrollBar.style.width = scrolled + "%";
             }
         });
