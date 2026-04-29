@@ -13,6 +13,7 @@
             --glass-border: rgba(0, 234, 238, 0.2);
         }
 
+        /* 保留系統預設滑鼠，以防萬一 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; cursor: default; }
         html { scroll-behavior: smooth; }
         
@@ -28,53 +29,49 @@
             overflow-x: hidden; 
         }
 
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 10%, rgba(0, 234, 238, 0.1), transparent 60%);
+            z-index: -2;
+        }
+
         /* =========================================
-           🐹 SVG 程式碼內嵌倉鼠鼠標 (絕不破圖)
+           🐹 網頁游標專用 CDN (絕對顯示)
            ========================================= */
         #custom-cursor {
-            width: 45px; height: 45px; 
-            position: fixed; pointer-events: none; z-index: 10001; 
-            transform: translate(0px, 0px); 
-            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='3' y='4' width='10' height='9' rx='2' fill='%23F4D3B5'/%3E%3Crect x='5' y='6' width='2' height='2' fill='%23333'/%3E%3Crect x='9' y='6' width='2' height='2' fill='%23333'/%3E%3Crect x='7' y='8' width='2' height='1' fill='%23F9AFAF'/%3E%3Crect x='3' y='2' width='3' height='3' rx='1' fill='%23F4D3B5'/%3E%3Crect x='10' y='2' width='3' height='3' rx='1' fill='%23F4D3B5'/%3E%3Crect x='4' y='3' width='1' height='1' fill='%23F9AFAF'/%3E%3Crect x='11' y='3' width='1' height='1' fill='%23F9AFAF'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat;
-            transition: width 0.2s, height 0.2s, opacity 0.2s;
-        }
-
-        .cursor-hover { 
-            width: 65px !important; height: 65px !important;
-            transform: translate(-10px, -10px) !important;
-            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='3' y='4' width='10' height='9' rx='2' fill='%23F4D3B5'/%3E%3Crect x='5' y='5' width='2' height='1' fill='%23333'/%3E%3Crect x='9' y='5' width='2' height='1' fill='%23333'/%3E%3Crect x='7' y='7' width='2' height='3' rx='1' fill='%23643B2A'/%3E%3Crect x='7' y='9' width='2' height='1' fill='%23F9AFAF'/%3E%3Crect x='3' y='2' width='3' height='3' rx='1' fill='%23F4D3B5'/%3E%3Crect x='10' y='2' width='3' height='3' rx='1' fill='%23F4D3B5'/%3E%3C/svg%3E") !important;
+            position: fixed; top: 0; left: 0;
+            width: 35px; height: 35px;
+            pointer-events: none; z-index: 99999;
+            opacity: 0; /* 滑鼠動了才顯示 */
+            transition: opacity 0.2s, transform 0.15s, width 0.15s, height 0.15s;
         }
 
         /* =========================================
-           🏃 進度條與 SVG 狂奔倉鼠
+           🏃 實體進度條倉鼠
            ========================================= */
         #progress-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 5px;
             background: rgba(0, 234, 238, 0.1); z-index: 10000;
         }
         #scroll-progress {
-            height: 100%; width: 0%; background: var(--accent-color);
-            position: relative; box-shadow: 0 0 10px var(--accent-color);
+            height: 100%; width: 0%; 
+            background: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color);
+            position: relative; 
         }
-        #scroll-progress::after {
-            content: ""; position: absolute; right: -20px; top: -30px; 
-            width: 35px; height: 35px;
-            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='3' y='4' width='10' height='9' rx='2' fill='%23F4D3B5'/%3E%3Cpath d='M4 13h2v1H4zM10 13h2v1h-2z' fill='%23F9AFAF'/%3E%3Crect x='4' y='6' width='2' height='2' fill='%23333'/%3E%3Crect x='10' y='6' width='2' height='2' fill='%23333'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat;
-            animation: run 0.3s infinite alternate ease-in-out;
+        #running-hamster {
+            position: absolute; right: -20px; bottom: 0px; 
+            width: 45px; height: auto;
+            pointer-events: none;
         }
-        @keyframes run { from { transform: translateY(0) rotate(-10deg); } to { transform: translateY(-5px) rotate(10deg); } }
 
-        /* 背景特效 */
-        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 10%, rgba(0, 234, 238, 0.1), transparent 60%); z-index: -2; }
-
+        /* --- 網頁佈局 --- */
         header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 20px 40px; position: relative; overflow: hidden; }
 
         .code-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
         .floating-code { position: absolute; font-family: 'Fira Code', monospace; color: rgba(0, 234, 238, 0.15); font-size: 1.2rem; white-space: nowrap; animation: drift linear infinite; bottom: -10%; }
         @keyframes drift { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 100% { transform: translateY(-110vh) rotate(10deg); opacity: 0; } }
-        .c1 { left: 10%; animation-duration: 18s; } .c2 { left: 30%; animation-duration: 22s; } .c3 { left: 60%; animation-duration: 15s; } .c4 { left: 80%; animation-duration: 25s; }
+        .c1 { left: 10%; animation-duration: 18s; } .c2 { left: 30%; animation-duration: 22s; font-size: 1.8rem;} .c3 { left: 60%; animation-duration: 15s; } .c4 { left: 80%; animation-duration: 25s; }
 
         .profile-wrapper {
             width: 130px; height: 130px; border-radius: 20px; padding: 3px;
@@ -84,9 +81,10 @@
         }
         .profile-img { width: 100%; height: 100%; border-radius: 18px; background: #0b131a; display: flex; justify-content: center; align-items: center; border: 2px solid #1a2f3a; }
         
-        /* 閃爍動畫，單純控制透明度 */
-        .blink { animation: blink 1s step-end infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        
+        /* 統一閃爍動畫 */
+        .blink { animation: blink 1s step-end infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         header h1 { font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800; margin-bottom: 5px; text-shadow: 0 0 20px rgba(0,234,238,0.4); color: #fff; line-height: 1.1; }
@@ -123,10 +121,12 @@
 </head>
 <body>
 
-    <div id="custom-cursor"></div>
+    <img id="custom-cursor" src="https://cdn.custom-cursor.com/cursors/pack2825/cute-hamster-cursor.png" alt="cursor">
     
     <div id="progress-container">
-        <div id="scroll-progress"></div>
+        <div id="scroll-progress">
+            <img src="https://media.tenor.com/S-Kx0pW8fIAAAAAC/hamster-run-hamster.gif" id="running-hamster" alt="run">
+        </div>
     </div>
 
     <header>
@@ -139,7 +139,7 @@
 
         <div class="profile-wrapper">
             <div class="profile-img">
-                <div style="font-family: 'Fira Code', monospace; font-size: 2.5rem; font-weight: 700; color: var(--accent-color);">
+                <div style="font-family: 'Fira Code', monospace; font-size: 2.5rem; font-weight: 700; color: var(--accent-color); line-height: 1;">
                     &gt;<span class="blink">_</span>
                 </div>
             </div>
@@ -147,8 +147,8 @@
 
         <h1>林沛陞 <br><span style="color: var(--accent-color); font-size: 0.8em;">PEI-SHENG</span></h1>
         
-        <div style="text-align: center; margin-bottom: 25px;">
-            <span id="typed-text" style="font-family: 'Fira Code', monospace; color: var(--accent-color); font-size: clamp(1rem, 3.5vw, 1.2rem);"></span><span class="blink" style="font-family: 'Fira Code', monospace; color: var(--accent-color); font-size: clamp(1rem, 3.5vw, 1.2rem);">_</span>
+        <div style="font-family: 'Fira Code', monospace; color: var(--accent-color); font-size: clamp(1rem, 3.5vw, 1.2rem); text-align: center; margin-bottom: 25px; height: 1.5rem;">
+            <span id="typed-text"></span><span class="blink">_</span>
         </div>
 
         <div class="header-actions">
@@ -232,27 +232,35 @@
     </footer>
 
     <script>
+        // 🐹 游標動畫邏輯
         const cursor = document.getElementById('custom-cursor');
-        const scrollBar = document.getElementById('scroll-progress');
-
-        // 滑鼠移動
+        
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
+            cursor.style.opacity = 1; // 動了才顯示
         });
 
-        // 離開視窗隱藏倉鼠
         document.body.addEventListener('mouseleave', () => cursor.style.opacity = 0);
-        document.body.addEventListener('mouseenter', () => cursor.style.opacity = 1);
 
-        // 懸停動畫
         const interactives = document.querySelectorAll('a, .btn, .project-card, .tag');
         interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+            el.addEventListener('mouseenter', () => {
+                cursor.src = "https://cdn.custom-cursor.com/cursors/pack2825/cute-hamster-pointer.png";
+                cursor.style.width = "48px";
+                cursor.style.height = "48px";
+                cursor.style.transform = "translate(-10px, -10px)";
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.src = "https://cdn.custom-cursor.com/cursors/pack2825/cute-hamster-cursor.png";
+                cursor.style.width = "35px";
+                cursor.style.height = "35px";
+                cursor.style.transform = "translate(0, 0)";
+            });
         });
 
-        // 進度條
+        // 🏃 進度條邏輯
+        const scrollBar = document.getElementById('scroll-progress');
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -262,21 +270,21 @@
             }
         });
 
-        // 🎯 穩定版打字機指令碼
+        // 🎯 JavaScript 驅動打字機 (保證 100% 游標不飛走)
         const textToType = "> Computer Science Student @YZU ";
         const typedTarget = document.getElementById('typed-text');
         let typeIndex = 0;
         
         function typeWriter() {
             if (typeIndex < textToType.length) {
-                // 將字元一個個塞進去，游標自然會被推著走，絕不跑版
+                // 將字元一個個塞進去，_ 自然會緊緊貼在最後面
                 typedTarget.textContent += textToType.charAt(typeIndex);
                 typeIndex++;
                 setTimeout(typeWriter, 80); // 打字速度
             }
         }
         
-        // 延遲 0.5 秒後開始打字
+        // 網頁載入後 0.5 秒開始打字
         setTimeout(typeWriter, 500);
     </script>
 </body>
