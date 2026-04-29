@@ -13,6 +13,7 @@
             --glass-border: rgba(0, 234, 238, 0.2);
         }
 
+        /* 恢復系統原始滑鼠，作為最安全的備用方案 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; cursor: default; }
         html { scroll-behavior: smooth; }
         
@@ -29,28 +30,28 @@
         }
 
         /* =========================================
-           🐹 像素倉鼠鼠標 (網上動圖版)
+           🐹 內嵌純程式碼繪製的像素倉鼠 (保證1000%不破圖)
            ========================================= */
         #custom-cursor {
-            width: 45px; height: 45px; 
+            width: 40px; height: 40px; 
             position: fixed; pointer-events: none; z-index: 10001; 
             transform: translate(5px, 5px); 
-            background-image: url('https://media.tenor.com/c4hXJ25u1B8AAAAi/pixel-hamster.gif');
+            /* 預設狀態的像素倉鼠 */
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect x='1' y='2' width='6' height='5' fill='%23E2A663'/%3E%3Crect x='2' y='4' width='4' height='3' fill='%23FFF'/%3E%3Crect x='1' y='1' width='2' height='1' fill='%23E2A663'/%3E%3Crect x='5' y='1' width='2' height='1' fill='%23E2A663'/%3E%3Crect x='2' y='3' width='1' height='1' fill='%23000'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%23000'/%3E%3Crect x='3' y='4' width='2' height='1' fill='%23FF9999'/%3E%3Crect x='2' y='7' width='1' height='1' fill='%23FF9999'/%3E%3Crect x='5' y='7' width='1' height='1' fill='%23FF9999'/%3E%3C/svg%3E");
             background-size: contain; background-repeat: no-repeat;
-            background-position: center;
+            image-rendering: pixelated; /* 確保像素感 */
             transition: width 0.2s, height 0.2s, opacity 0.2s;
-            opacity: 1;
         }
 
-        /* 懸停狀態：變形/打哈欠像素倉鼠 */
+        /* 懸停狀態：張嘴打哈欠的像素倉鼠 */
         .cursor-hover { 
-            width: 70px !important; height: 70px !important;
-            transform: translate(-10px, -10px) !important;
-            background-image: url('https://media.tenor.com/bK-q0xRzUjAAAAAi/wiggle-pixel.gif') !important;
+            width: 55px !important; height: 55px !important;
+            transform: translate(-2px, -2px) !important;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect x='1' y='2' width='6' height='5' fill='%23E2A663'/%3E%3Crect x='2' y='4' width='4' height='3' fill='%23FFF'/%3E%3Crect x='1' y='1' width='2' height='1' fill='%23E2A663'/%3E%3Crect x='5' y='1' width='2' height='1' fill='%23E2A663'/%3E%3Crect x='2' y='3' width='1' height='1' fill='%23000'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%23000'/%3E%3Crect x='3' y='4' width='2' height='2' fill='%23550000'/%3E%3Crect x='3' y='5' width='2' height='1' fill='%23FF9999'/%3E%3Crect x='2' y='7' width='1' height='1' fill='%23FF9999'/%3E%3Crect x='5' y='7' width='1' height='1' fill='%23FF9999'/%3E%3C/svg%3E") !important;
         }
 
         /* =========================================
-           🏃 進度條與實體倉鼠
+           🏃 進度條與狂奔的像素小倉鼠
            ========================================= */
         #progress-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 5px;
@@ -62,11 +63,19 @@
             box-shadow: 0 0 10px var(--accent-color);
             position: relative; 
         }
-        #running-hamster {
-            position: absolute;
-            right: -25px; bottom: -5px; 
-            width: 45px; height: 45px;
-            pointer-events: none; 
+        #scroll-progress::after {
+            content: "";
+            position: absolute; right: -15px; bottom: 0px; 
+            width: 30px; height: 30px;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect x='1' y='2' width='6' height='5' fill='%23E2A663'/%3E%3Crect x='2' y='4' width='4' height='3' fill='%23FFF'/%3E%3Crect x='1' y='1' width='2' height='1' fill='%23E2A663'/%3E%3Crect x='5' y='1' width='2' height='1' fill='%23E2A663'/%3E%3Crect x='2' y='3' width='1' height='1' fill='%23000'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%23000'/%3E%3Crect x='3' y='4' width='2' height='1' fill='%23FF9999'/%3E%3Crect x='2' y='7' width='1' height='1' fill='%23FF9999'/%3E%3Crect x='5' y='7' width='1' height='1' fill='%23FF9999'/%3E%3C/svg%3E");
+            background-size: contain; background-repeat: no-repeat;
+            image-rendering: pixelated;
+            /* 讓倉鼠左右搖擺，看起來像在跑 */
+            animation: hamster-run 0.3s infinite alternate ease-in-out;
+        }
+        @keyframes hamster-run {
+            from { transform: rotate(-10deg); }
+            to { transform: rotate(10deg); }
         }
 
         /* 背景與質感 */
@@ -87,40 +96,48 @@
         @keyframes drift { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 100% { transform: translateY(-110vh) rotate(10deg); opacity: 0; } }
         .c1 { left: 10%; animation-duration: 18s; } .c2 { left: 30%; animation-duration: 22s; font-size: 1.8rem;} .c3 { left: 60%; animation-duration: 15s; } .c4 { left: 80%; animation-duration: 25s; }
 
+        /* 移除了上下浮動的 float 動畫，保證圖示絕對靜止不跳動 */
         .profile-wrapper {
             width: 130px; height: 130px; border-radius: 20px; padding: 3px;
             background: linear-gradient(135deg, var(--accent-color), transparent);
             margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 234, 238, 0.3);
-            animation: float 4s ease-in-out infinite; transform-origin: center;
         }
         .profile-img { width: 100%; height: 100%; border-radius: 18px; background: #0b131a; display: flex; justify-content: center; align-items: center; border: 2px solid #1a2f3a; }
         
         /* =========================================
-           🛠️ 徹底修復終端機圖示：乾淨的 >_ 不亂跳
+           🛠️ 徹底修復表情 >_-
+           完全使用純文字，絕不可能造成版面高度跳動
            ========================================= */
         .terminal-icon { 
-            font-family: 'Fira Code', monospace; font-size: 2rem; font-weight: 700; color: #fff;
+            font-family: 'Fira Code', monospace; font-size: 2.5rem; font-weight: 700; color: #fff;
         }
+        /* 單純控制透明度的閃爍 */
         .blink { animation: blink 1s step-end infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         header h1 { font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800; margin-bottom: 5px; text-shadow: 0 0 20px rgba(0,234,238,0.4); color: #fff; line-height: 1.1; }
 
         /* =========================================
-           🛠️ 徹底修復打字機：文字與底線穩固不跑版
+           🛠️ 徹底修復打字機：鎖死字元長度，游標不再亂跑
            ========================================= */
-        .typewriter-container {
-            font-family: 'Fira Code', monospace; color: var(--accent-color);
-            font-size: clamp(1rem, 3.5vw, 1.2rem); margin-bottom: 25px;
-            text-align: center;
+        .typewriter-wrapper {
+            display: flex; justify-content: center; width: 100%; margin-bottom: 25px;
+        }
+        .typewriter-content {
+            display: flex; 
+            width: 32ch; /* 剛好等於文字長度，保證置中且不移動 */
         }
         .typewriter-text {
-            display: inline-block; overflow: hidden; white-space: nowrap; 
-            vertical-align: bottom; /* 確保與底線對齊 */
-            animation: typing 3s steps(35, end) forwards;
+            font-family: 'Fira Code', monospace; color: var(--accent-color);
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            white-space: nowrap; overflow: hidden;
+            animation: typing 3s steps(32, end) forwards;
         }
-        @keyframes typing { from { max-width: 0; } to { max-width: 35ch; } }
+        .typewriter-cursor {
+            font-family: 'Fira Code', monospace; color: var(--accent-color);
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+        }
+        @keyframes typing { from { width: 0; } to { width: 32ch; } }
 
         .header-actions { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; z-index: 10; margin-bottom: 20px;}
         .btn { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-family: 'Fira Code', monospace; font-weight: 600; font-size: 0.9rem; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
@@ -157,9 +174,7 @@
     <div id="custom-cursor"></div>
     
     <div id="progress-container">
-        <div id="scroll-progress">
-            <img src="https://media.tenor.com/S-Kx0pW8fIAAAAAC/hamster-run-hamster.gif" id="running-hamster" alt="Running Hamster">
-        </div>
+        <div id="scroll-progress"></div>
     </div>
 
     <header>
@@ -173,15 +188,18 @@
         <div class="profile-wrapper">
             <div class="profile-img">
                 <div class="terminal-icon">
-                    <span style="color: var(--accent-color);">&gt;</span><span class="blink" style="color: var(--accent-color);">_</span>
+                    <span style="color: var(--accent-color);">&gt;</span>_<span class="blink" style="color: var(--accent-color);">-</span>
                 </div>
             </div>
         </div>
 
         <h1>林沛陞 <br><span style="color: var(--accent-color); font-size: 0.8em;">PEI-SHENG</span></h1>
         
-        <div class="typewriter-container">
-            <span class="typewriter-text">&gt; Computer Science Student @YZU </span><span class="blink">_</span>
+        <div class="typewriter-wrapper">
+            <div class="typewriter-content">
+                <span class="typewriter-text">&gt; Computer Science Student @YZU </span>
+                <span class="typewriter-cursor blink">_</span>
+            </div>
         </div>
 
         <div class="header-actions">
@@ -278,7 +296,7 @@
         document.body.addEventListener('mouseleave', () => cursor.style.opacity = 0);
         document.body.addEventListener('mouseenter', () => cursor.style.opacity = 1);
 
-        // 懸停切換動圖
+        // 懸停切換打哈欠狀態
         const interactives = document.querySelectorAll('a, .btn, .project-card, .tag');
         interactives.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
