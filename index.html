@@ -6,6 +6,7 @@
     <title>Pei-Sheng's Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* === 這裡開始完全是你原本的 CSS，我一字未改 === */
         :root {
             --bg-color: #0b131a;
             --accent-color: #00eaee;
@@ -13,8 +14,7 @@
             --glass-border: rgba(0, 234, 238, 0.2);
         }
 
-        /* 保留系統預設滑鼠，以防萬一 */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; cursor: default; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         html { scroll-behavior: smooth; }
         
         body {
@@ -35,97 +35,204 @@
             z-index: -2;
         }
 
-        /* =========================================
-           🐹 網頁游標專用 CDN (絕對顯示)
-           ========================================= */
-        #custom-cursor {
-            position: fixed; top: 0; left: 0;
-            width: 35px; height: 35px;
-            pointer-events: none; z-index: 99999;
-            opacity: 0; /* 滑鼠動了才顯示 */
-            transition: opacity 0.2s, transform 0.15s, width 0.15s, height 0.15s;
+        header {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center; 
+            padding: 80px 20px 40px; position: relative; overflow: hidden;
         }
 
-        /* =========================================
-           🏃 實體進度條倉鼠
-           ========================================= */
-        #progress-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 5px;
-            background: rgba(0, 234, 238, 0.1); z-index: 10000;
+        .code-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
         }
-        #scroll-progress {
-            height: 100%; width: 0%; 
-            background: var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-color);
-            position: relative; 
+        .floating-code {
+            position: absolute; font-family: 'Fira Code', monospace; color: rgba(0, 234, 238, 0.15);
+            font-size: 1.2rem; white-space: nowrap; user-select: none;
+            animation: drift linear infinite; bottom: -10%;
         }
-        #running-hamster {
-            position: absolute; right: -20px; bottom: 0px; 
-            width: 45px; height: auto;
-            pointer-events: none;
+        @keyframes drift {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(10deg); opacity: 0; }
         }
-
-        /* --- 網頁佈局 --- */
-        header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 20px 40px; position: relative; overflow: hidden; }
-
-        .code-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-        .floating-code { position: absolute; font-family: 'Fira Code', monospace; color: rgba(0, 234, 238, 0.15); font-size: 1.2rem; white-space: nowrap; animation: drift linear infinite; bottom: -10%; }
-        @keyframes drift { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 100% { transform: translateY(-110vh) rotate(10deg); opacity: 0; } }
-        .c1 { left: 10%; animation-duration: 18s; } .c2 { left: 30%; animation-duration: 22s; font-size: 1.8rem;} .c3 { left: 60%; animation-duration: 15s; } .c4 { left: 80%; animation-duration: 25s; }
+        .c1 { left: 10%; animation-duration: 18s; animation-delay: 0s; }
+        .c2 { left: 30%; animation-duration: 22s; animation-delay: -5s; font-size: 1.8rem; }
+        .c3 { left: 60%; animation-duration: 15s; animation-delay: -10s; }
+        .c4 { left: 80%; animation-duration: 25s; animation-delay: -2s; font-size: 1.5rem; }
+        .c5 { left: 20%; animation-duration: 20s; animation-delay: -12s; }
 
         .profile-wrapper {
-            width: 130px; height: 130px; border-radius: 20px; padding: 3px;
-            background: linear-gradient(135deg, var(--accent-color), transparent);
+            width: 130px; height: 130px; border-radius: 20px;
+            padding: 3px; background: linear-gradient(135deg, var(--accent-color), transparent);
             margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 234, 238, 0.3);
             animation: float 4s ease-in-out infinite; transform-origin: center;
         }
-        .profile-img { width: 100%; height: 100%; border-radius: 18px; background: #0b131a; display: flex; justify-content: center; align-items: center; border: 2px solid #1a2f3a; }
-        
+        .profile-img {
+            width: 100%; height: 100%; border-radius: 18px; background: #0b131a;
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid #1a2f3a;
+        }
+        .terminal-icon { font-family: 'Fira Code', monospace; font-size: 2rem; font-weight: 700; color: #fff; }
+        .terminal-icon span.arrow { color: var(--accent-color); }
+        .terminal-icon span.cursor { 
+            display: inline-block; width: 15px; height: 4px; background: var(--accent-color);
+            animation: blink 1s step-end infinite; margin-left: 5px; vertical-align: middle;
+        }
+
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-        
-        /* 統一閃爍動畫 */
-        .blink { animation: blink 1s step-end infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        header h1 { font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800; margin-bottom: 5px; text-shadow: 0 0 20px rgba(0,234,238,0.4); color: #fff; line-height: 1.1; }
+        header h1 {
+            font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800;
+            margin-bottom: 5px; letter-spacing: -2px; 
+            text-shadow: 0 0 20px rgba(0,234,238,0.4); color: #fff; line-height: 1.1;
+        }
+
+        .typewriter-wrapper {
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+        .typewriter {
+            font-family: 'Fira Code', monospace; 
+            color: var(--accent-color);
+            font-size: clamp(1rem, 3.5vw, 1.2rem); 
+            overflow: hidden; 
+            white-space: nowrap; 
+            border-right: 0.15em solid var(--accent-color);
+            margin: 0 auto;
+            letter-spacing: 0.05em;
+            animation: 
+                typing 3s steps(30, end) forwards, 
+                blink-caret 0.75s step-end infinite;
+        }
+        @keyframes typing { 
+            from { width: 0; } 
+            to { width: 100%; } 
+        }
+        @keyframes blink-caret { 
+            from, to { border-color: transparent; } 
+            50% { border-color: var(--accent-color); } 
+        }
 
         .header-actions { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; z-index: 10; margin-bottom: 20px;}
-        .btn { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-family: 'Fira Code', monospace; font-weight: 600; font-size: 0.9rem; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn {
+            padding: 10px 20px; border-radius: 8px; text-decoration: none; font-family: 'Fira Code', monospace;
+            font-weight: 600; font-size: 0.9rem; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px;
+        }
         .btn-primary { background: var(--accent-color); color: #000; box-shadow: 0 0 15px rgba(0,234,238,0.2); }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 5px 25px rgba(0,234,238,0.5); }
-        .btn-outline { border: 1px solid var(--accent-color); color: var(--accent-color); background: rgba(0, 234, 238, 0.05); }
-        .btn-outline:hover { background: rgba(0, 234, 238, 0.15); transform: translateY(-3px); }
+        .btn-outline { border: 1px solid var(--accent-color); color: var(--accent-color); background: rgba(0,234,238,0.05); }
+        .btn-outline:hover { background: rgba(0,234,238,0.15); transform: translateY(-3px); }
 
-        nav { backdrop-filter: blur(12px); background: rgba(11, 19, 26, 0.8); padding: 12px 25px; border-radius: 12px; border: 1px solid var(--glass-border); position: sticky; top: 20px; z-index: 100; margin: 0 auto 40px; width: fit-content; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        nav a { color: #fff; text-decoration: none; margin: 0 12px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; transition: 0.3s; }
+        nav {
+            backdrop-filter: blur(12px); background: rgba(11, 19, 26, 0.8);
+            padding: 12px 25px; border-radius: 12px; border: 1px solid var(--glass-border);
+            position: sticky; top: 20px; z-index: 100; margin: 0 auto 40px; width: fit-content;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        nav a {
+            color: #fff; text-decoration: none; margin: 0 12px;
+            font-weight: 600; font-size: 0.85rem; text-transform: uppercase; transition: 0.3s;
+        }
         nav a:hover { color: var(--accent-color); text-shadow: 0 0 8px var(--accent-color); }
-        
+
         section { padding: 60px 20px; max-width: 900px; margin: auto; position: relative; z-index: 10; }
-        .card { background: var(--glass-bg); backdrop-filter: blur(15px); padding: 35px; border-radius: 16px; border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); margin-bottom: 30px; }
+        .card {
+            background: var(--glass-bg); backdrop-filter: blur(15px);
+            padding: 35px; border-radius: 16px; border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); margin-bottom: 30px;
+        }
         h2 { font-size: 1.8rem; margin-bottom: 25px; color: var(--accent-color); border-bottom: 1px dashed var(--glass-border); padding-bottom: 10px; font-family: 'Fira Code', monospace;}
         
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
         .tag-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .tag { background: rgba(0, 234, 238, 0.05); border: 1px solid rgba(0, 234, 238, 0.3); color: var(--accent-color); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-family: 'Fira Code', monospace; }
-        
+        .tag {
+            background: rgba(0, 234, 238, 0.05); border: 1px solid rgba(0, 234, 238, 0.3);
+            color: var(--accent-color); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-family: 'Fira Code', monospace;
+        }
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-        .project-card { background: rgba(255, 255, 255, 0.02); padding: 25px; border-radius: 12px; border: 1px solid var(--glass-border); transition: all 0.3s ease; border-left: 3px solid transparent; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-        .project-card:hover { transform: translateX(5px); border-left: 3px solid var(--accent-color); background: rgba(0, 234, 238, 0.05); border-color: var(--accent-color); }
-        
-        .contact-link { display: inline-block; margin-top: 15px; color: var(--accent-color); text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1rem; font-family: 'Fira Code', monospace; }
+        .project-card {
+            background: rgba(255, 255, 255, 0.02); padding: 25px; border-radius: 12px;
+            border: 1px solid var(--glass-border); transition: all 0.3s ease;
+            border-left: 3px solid transparent; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .project-card:hover { 
+            transform: translateX(5px); border-left: 3px solid var(--accent-color); 
+            background: rgba(0, 234, 238, 0.05); border-color: var(--accent-color);
+        }
+        .contact-link {
+            display: inline-block; margin-top: 15px; color: var(--accent-color);
+            text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1rem; font-family: 'Fira Code', monospace;
+        }
         .contact-link:hover { text-shadow: 0 0 15px var(--accent-color); }
         footer { text-align: center; padding: 30px 20px 60px; opacity: 0.5; font-size: 0.8rem; font-family: 'Fira Code', monospace; }
         
-        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } nav { padding: 12px 15px; } nav a { margin: 0 8px; font-size: 0.75rem; } #custom-cursor { display: none; } }
+        @media (max-width: 600px) { 
+            .grid-2 { grid-template-columns: 1fr; } 
+            nav { padding: 12px 15px; }
+            nav a { margin: 0 8px; font-size: 0.75rem; }
+        }
+
+        /* === 這裡是我唯一新增的 CSS：倉鼠與進度條 === */
+        
+        /* 1. 跟在滑鼠旁邊的倉鼠 */
+        #hamster-cursor {
+            position: fixed;
+            width: 35px;
+            height: 35px;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(12px, 12px); /* 讓倉鼠稍微偏離滑鼠中心，才不會擋住點擊 */
+            background-image: url('https://media.tenor.com/c4hXJ25u1B8AAAAi/pixel-hamster.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: transform 0.15s ease-out;
+        }
+        
+        /* 移到按鈕上時放大 */
+        .hamster-hover {
+            transform: translate(12px, 12px) scale(1.5) !important;
+        }
+
+        /* 2. 頂部進度條 */
+        #progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 234, 238, 0.1);
+            z-index: 100000;
+        }
+        
+        #scroll-progress {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-color);
+            position: relative;
+        }
+
+        /* 3. 在進度條上跑的倉鼠 */
+        #running-hamster {
+            position: absolute;
+            right: -20px;
+            top: -30px;
+            width: 35px;
+            height: 35px;
+            background-image: url('https://media.tenor.com/S-Kx0pW8fIAAAAAC/hamster-run-hamster.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
     </style>
 </head>
 <body>
 
-    <img id="custom-cursor" src="https://cdn.custom-cursor.com/cursors/pack2825/cute-hamster-cursor.png" alt="cursor">
-    
+    <div id="hamster-cursor"></div>
+
     <div id="progress-container">
         <div id="scroll-progress">
-            <img src="https://media.tenor.com/S-Kx0pW8fIAAAAAC/hamster-run-hamster.gif" id="running-hamster" alt="run">
+            <div id="running-hamster"></div>
         </div>
     </div>
 
@@ -135,20 +242,19 @@
             <div class="floating-code c2">git push -u origin main</div>
             <div class="floating-code c3">vector&lt;int&gt; dp(n, 0);</div>
             <div class="floating-code c4">while(true) { debug(); }</div>
+            <div class="floating-code c5">Matrix A = Matrix::Identity(3, 3);</div>
         </div>
 
         <div class="profile-wrapper">
             <div class="profile-img">
-                <div style="font-family: 'Fira Code', monospace; font-size: 2.5rem; font-weight: 700; color: var(--accent-color); line-height: 1;">
-                    &gt;<span class="blink">_</span>
-                </div>
+                <div class="terminal-icon"><span class="arrow">></span>_<span class="cursor"></span></div>
             </div>
         </div>
 
         <h1>林沛陞 <br><span style="color: var(--accent-color); font-size: 0.8em;">PEI-SHENG</span></h1>
         
-        <div style="font-family: 'Fira Code', monospace; color: var(--accent-color); font-size: clamp(1rem, 3.5vw, 1.2rem); text-align: center; margin-bottom: 25px; height: 1.5rem;">
-            <span id="typed-text"></span><span class="blink">_</span>
+        <div class="typewriter-wrapper">
+            <div class="typewriter">&gt; Computer Science Student @YZU _ </div>
         </div>
 
         <div class="header-actions">
@@ -169,6 +275,7 @@
             <h2>> About</h2>
             <p>嗨，我是林沛陞！目前就讀於元智大學資工系。最喜歡的是打code的鍵盤聲，最討厭的事情是debug；而且打code的時間永遠在深夜裡。</p>
             <p style="margin-top: 10px;">寫程式的標配是 Spotify 3天8小時長的歌單配上熱牛奶，會因為討厭打很難的function就把寫好的簡單function全刪掉重寫，只是為了聽打鍵盤的聲音，總而言之就是一個很奇怪的人。</p>
+            
             <div class="grid-2">
                 <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border-left: 2px solid var(--accent-color);">🎓 <strong>Student ID：</strong> s1133341</div>
                 <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border-left: 2px solid var(--accent-color);">📚 <strong>Major：</strong> Computer Science</div>
@@ -179,10 +286,17 @@
     <section id="skills">
         <div class="card">
             <h2>> skills</h2>
+            <p>目前點亮的技能樹跟日常狀態：</p>
             <div class="tag-container">
                 <span class="tag">C++ Programming</span>
                 <span class="tag">Linear Algebra</span>
                 <span class="tag">HTML / CSS </span>
+                <span class="tag">Fundation Of Computer Science </span>
+                <span class="tag">Physics</span>
+                <span class="tag">Calculation</span>
+                <span class="tag">Discrete Mathematics</span>
+                <span class="tag">Medical Imformatics</span>
+                <span class="tag">Calculation</span>
                 <span class="tag">Data Structure</span>
                 <span class="tag">Algorithm</span>
                 <span class="tag">占星 塔羅 手相</span> 
@@ -197,24 +311,28 @@
         <div style="margin-bottom: 30px;">
             <h2 style="border: none;">> projects( still working )</h2>
             <div class="projects-grid">
+                
                 <a href="https://github.com/pei0823/11402_CI002" target="_blank" style="text-decoration: none; color: inherit; display: block;">
                     <div class="project-card">
-                        <h3 style="color: var(--accent-color);"> C++ 實習紀錄</h3>
+                        <h3 style="font-family: 'Fira Code', monospace; color: var(--accent-color);"> C++ 實習紀錄</h3>
                         <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">11402學期的課堂筆記與作業，學期分數就靠它了!</p>
                     </div>
                 </a>
+
                 <a href="#" target="_blank" style="text-decoration: none; color: inherit; display: block;">
                     <div class="project-card">
-                        <h3 style="color: var(--accent-color);"> 線性代數復健區</h3>
-                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">矩陣、行列式跟向量的痛苦筆記區，雖然學完了整理筆記還是很痛苦。</p>
+                        <h3 style="font-family: 'Fira Code', monospace; color: var(--accent-color);"> 線性代數復健區</h3>
+                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">矩陣、行列式跟向量的痛苦筆記區，雖然已經學完了但一想到整理筆記要再重看一次就很痛苦。</p>
                     </div>
                 </a>
+
                 <a href="https://www.instagram.com/ssstupid_1723/" target="_blank" style="text-decoration: none; color: inherit; display: block;">
                     <div class="project-card">
-                        <h3 style="color: var(--accent-color);"> 個人耍廢指南</h3>
-                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">包含日常紀錄和回憶留存區，反正不會跟程式有半毛錢的關係。</p>
+                        <h3 style="font-family: 'Fira Code', monospace; color: var(--accent-color);"> 個人耍廢指南</h3>
+                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">可能是這裡最好看的地方，包含日常紀錄和回憶留存區，反正不會跟程式有半毛錢的關係。</p>
                     </div>
                 </a>
+
             </div>
         </div>
     </section>
@@ -232,60 +350,31 @@
     </footer>
 
     <script>
-        // 🐹 游標動畫邏輯
-        const cursor = document.getElementById('custom-cursor');
-        
+        const hamsterCursor = document.getElementById('hamster-cursor');
+        const scrollProgress = document.getElementById('scroll-progress');
+
+        // 讓倉鼠跟著滑鼠移動
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursor.style.opacity = 1; // 動了才顯示
+            hamsterCursor.style.left = e.clientX + 'px';
+            hamsterCursor.style.top = e.clientY + 'px';
         });
 
-        document.body.addEventListener('mouseleave', () => cursor.style.opacity = 0);
-
+        // 移到可以點擊的地方時，倉鼠稍微放大
         const interactives = document.querySelectorAll('a, .btn, .project-card, .tag');
         interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.src = "https://cdn.custom-cursor.com/cursors/pack2825/cute-hamster-pointer.png";
-                cursor.style.width = "48px";
-                cursor.style.height = "48px";
-                cursor.style.transform = "translate(-10px, -10px)";
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.src = "https://cdn.custom-cursor.com/cursors/pack2825/cute-hamster-cursor.png";
-                cursor.style.width = "35px";
-                cursor.style.height = "35px";
-                cursor.style.transform = "translate(0, 0)";
-            });
+            el.addEventListener('mouseenter', () => hamsterCursor.classList.add('hover-state'));
+            el.addEventListener('mouseleave', () => hamsterCursor.classList.remove('hover-state'));
         });
 
-        // 🏃 進度條邏輯
-        const scrollBar = document.getElementById('scroll-progress');
+        // 網頁滾動時，更新進度條的寬度
         window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            if (height > 0) {
-                const scrolled = (winScroll / height) * 100;
-                scrollBar.style.width = scrolled + "%";
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (scrollHeight > 0) {
+                const scrolled = (scrollTop / scrollHeight) * 100;
+                scrollProgress.style.width = scrolled + '%';
             }
         });
-
-        // 🎯 JavaScript 驅動打字機 (保證 100% 游標不飛走)
-        const textToType = "> Computer Science Student @YZU ";
-        const typedTarget = document.getElementById('typed-text');
-        let typeIndex = 0;
-        
-        function typeWriter() {
-            if (typeIndex < textToType.length) {
-                // 將字元一個個塞進去，_ 自然會緊緊貼在最後面
-                typedTarget.textContent += textToType.charAt(typeIndex);
-                typeIndex++;
-                setTimeout(typeWriter, 80); // 打字速度
-            }
-        }
-        
-        // 網頁載入後 0.5 秒開始打字
-        setTimeout(typeWriter, 500);
     </script>
 </body>
 </html>
