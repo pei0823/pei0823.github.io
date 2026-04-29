@@ -13,7 +13,8 @@
             --glass-border: rgba(0, 234, 238, 0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; cursor: none !important; }
+        /* 移除 cursor: none，保留系統鼠標作為安全底線 */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; cursor: default; }
         html { scroll-behavior: smooth; }
         
         body {
@@ -28,30 +29,34 @@
             overflow-x: hidden; 
         }
 
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 10%, rgba(0, 234, 238, 0.1), transparent 60%);
-            z-index: -2;
-        }
-
         /* =========================================
-           🐹 100% 絕對不會破圖的 Emoji 滑鼠系統
+           🐹 100% 穩定的寶可夢像素倉鼠鼠標
            ========================================= */
         #custom-cursor {
-            position: fixed; top: 0; left: 0;
-            pointer-events: none; z-index: 10000;
-            font-size: 32px; /* 倉鼠大小 */
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease-out, font-size 0.2s ease;
-            text-shadow: 0 0 10px rgba(0, 234, 238, 0.5); /* 帶點科技感發光 */
-        }
-        /* 懸停時放大並透過 JS 切換成打哈欠 */
-        .cursor-hover {
-            font-size: 55px !important;
-            transform: translate(-50%, -50%) scale(1.1);
+            width: 45px; height: 45px; 
+            position: fixed; 
+            pointer-events: none;
+            z-index: 10001; 
+            /* 讓圖片中心對準滑鼠游標右下方一點點，不擋住點擊點 */
+            transform: translate(0%, 0%);
+            /* 莫魯貝可 滿腹狀態 (預設) */
+            background-image: url('https://play.pokemonshowdown.com/sprites/ani/morpeko.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            image-rendering: pixelated; /* 確保像素風格清晰 */
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), width 0.2s, height 0.2s;
         }
 
-        /* --- 🐹 進度條與跑動的倉鼠 --- */
+        /* 懸停狀態：莫魯貝可 空腹生氣狀態 */
+        .cursor-hover { 
+            width: 65px !important; 
+            height: 65px !important;
+            transform: translate(-10%, -10%) scale(1.1) !important;
+            background-image: url('https://play.pokemonshowdown.com/sprites/ani/morpeko-hangry.gif') !important;
+        }
+
+        /* --- 🏃 像素倉鼠進度條 --- */
         #progress-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 4px;
             background: rgba(0, 234, 238, 0.1); z-index: 9999;
@@ -63,9 +68,21 @@
         }
         /* 進度條上的小倉鼠 */
         #scroll-progress::after {
-            content: "🐹";
-            position: absolute; right: -15px; top: -22px;
-            font-size: 20px;
+            content: "";
+            position: absolute; right: -20px; top: -30px;
+            width: 35px; height: 35px;
+            background-image: url('https://play.pokemonshowdown.com/sprites/ani/morpeko.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            image-rendering: pixelated;
+        }
+
+        /* --- 其他背景與特效 --- */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 10%, rgba(0, 234, 238, 0.1), transparent 60%);
+            z-index: -2;
         }
 
         header {
@@ -74,7 +91,6 @@
             padding: 80px 20px 40px; position: relative; overflow: hidden;
         }
 
-        /* --- 動態漂浮程式碼 --- */
         .code-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none;
@@ -96,7 +112,6 @@
         .c4 { left: 80%; animation-duration: 25s; animation-delay: -2s; font-size: 1.5rem; }
         .c5 { left: 20%; animation-duration: 20s; animation-delay: -12s; }
 
-        /* --- 終端機動態頭像框 --- */
         .profile-wrapper {
             width: 130px; height: 130px; border-radius: 20px;
             padding: 3px; background: linear-gradient(135deg, var(--accent-color), transparent);
@@ -110,21 +125,18 @@
         }
         
         /* =========================================
-           🛠️ 修復 >_- 亂跳的 Bug
+           🛠️ 徹底修復 >_- 亂跳的 Bug
+           不再使用 height/width 的區塊，改用純文字閃爍，絕對不會版面跳動
            ========================================= */
-        .terminal-icon { font-family: 'Fira Code', monospace; font-size: 2rem; font-weight: 700; color: #fff; display: flex; align-items: center;}
-        .terminal-icon span.arrow { color: var(--accent-color); }
+        .terminal-icon { font-family: 'Fira Code', monospace; font-size: 2rem; font-weight: 700; color: #fff; }
+        .terminal-icon span.arrow { color: var(--accent-color); margin-right: 2px;}
         .terminal-icon span.cursor { 
-            display: inline-block; width: 15px; height: 4px; background: var(--accent-color);
-            animation: blink 1s step-end infinite; margin-left: 5px; 
-            position: relative; top: 8px; /* 用 relative 定位，避免影響父層高度導致跳動 */
-            will-change: opacity;
+            color: var(--accent-color);
+            animation: blink 1s step-end infinite; 
         }
-
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* 名字排版 */
         header h1 {
             font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800;
             margin-bottom: 5px; letter-spacing: -2px; 
@@ -148,16 +160,9 @@
                 typing 3s steps(30, end) forwards, 
                 blink-caret 0.75s step-end infinite;
         }
-        @keyframes typing { 
-            from { width: 0; } 
-            to { width: 100%; } 
-        }
-        @keyframes blink-caret { 
-            from, to { border-color: transparent; } 
-            50% { border-color: var(--accent-color); } 
-        }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--accent-color); } }
 
-        /* 頂部按鈕 */
         .header-actions { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; z-index: 10; margin-bottom: 20px;}
         .btn {
             padding: 10px 20px; border-radius: 8px; text-decoration: none; font-family: 'Fira Code', monospace;
@@ -168,7 +173,6 @@
         .btn-outline { border: 1px solid var(--accent-color); color: var(--accent-color); background: rgba(0,234,238,0.05); }
         .btn-outline:hover { background: rgba(0,234,238,0.15); transform: translateY(-3px); }
 
-        /* 導覽列 */
         nav {
             backdrop-filter: blur(12px); background: rgba(11, 19, 26, 0.8);
             padding: 12px 25px; border-radius: 12px; border: 1px solid var(--glass-border);
@@ -181,7 +185,6 @@
         }
         nav a:hover { color: var(--accent-color); text-shadow: 0 0 8px var(--accent-color); }
 
-        /* 內容區塊 */
         section { padding: 60px 20px; max-width: 900px; margin: auto; position: relative; z-index: 10; }
         .card {
             background: var(--glass-bg); backdrop-filter: blur(15px);
@@ -218,14 +221,13 @@
             .grid-2 { grid-template-columns: 1fr; } 
             nav { padding: 12px 15px; }
             nav a { margin: 0 8px; font-size: 0.75rem; }
-            #custom-cursor { display: none; } /* 手機端隱藏自定義游標 */
-            * { cursor: auto !important; }
+            #custom-cursor { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div id="custom-cursor">🐹</div>
+    <div id="custom-cursor"></div>
     
     <div id="progress-container">
         <div id="scroll-progress"></div>
@@ -242,7 +244,7 @@
 
         <div class="profile-wrapper">
             <div class="profile-img">
-                <div class="terminal-icon"><span class="arrow">></span>_<span class="cursor"></span></div>
+                <div class="terminal-icon"><span class="arrow">></span><span class="cursor">_</span></div>
             </div>
         </div>
 
@@ -348,27 +350,21 @@
         const cursor = document.getElementById('custom-cursor');
         const scrollBar = document.getElementById('scroll-progress');
 
-        // 1. 滑鼠移動跟隨
+        // 1. 滑鼠移動跟隨 (讓像素倉鼠跟在真實滑鼠的旁邊)
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            cursor.style.left = e.clientX + 10 + 'px'; // 偏移一點點，避免擋住點擊點
+            cursor.style.top = e.clientY + 10 + 'px';
         });
 
-        // 2. 離開視窗隱藏滑鼠
+        // 2. 離開視窗隱藏自定義倉鼠
         document.body.addEventListener('mouseleave', () => cursor.style.opacity = 0);
         document.body.addEventListener('mouseenter', () => cursor.style.opacity = 1);
 
-        // 3. 懸停互動：切換成打哈欠 Emoji
+        // 3. 懸停互動：切換莫魯貝可狀態
         const interactives = document.querySelectorAll('a, .btn, .project-card, .tag');
         interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('cursor-hover');
-                cursor.textContent = "🥱"; // 切換成打哈欠
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('cursor-hover');
-                cursor.textContent = "🐹"; // 恢復原狀
-            });
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
         // 4. 滾動進度條
